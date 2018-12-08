@@ -54,6 +54,29 @@ class Players extends Component {
         document.getElementById("createPlayerForm").reset();
     }
 
+    deletePlayer(id) {
+        console.log('Delete Player function')
+        console.log(id)
+        axios.delete(`/api/players/?${id}`)
+            .then(res => {
+                this.setState({
+                    players: res.data
+                })
+            })
+    }
+
+    editPlayer(id) {
+        console.log('Edit Player function')
+        const playerIndex = this.state.players.findIndex(
+            player => player.id == id
+        )
+        let player = this.state.players[playerIndex]
+        console.log(player)
+
+        
+
+        // return(<div className='edit-container'>edit player</div>)
+    }
 
     render() {
 
@@ -66,7 +89,10 @@ class Players extends Component {
                     <div className="playerData">{`${player.firstName} ${player.lastName}`}</div>
                     <div className="playerData">{player.team}</div>
                     <div className="playerData">{player.position}</div>
-                    <div className="playerData playerControls"><FaPencilAlt /> <FaTrashAlt /></div>
+                    <div className="playerData playerControls">
+                        <span className="player-control-icons" onClick={() => this.editPlayer(player.id)}><FaPencilAlt /></span>
+                        <span className="player-control-icons" onClick={() => this.deletePlayer(player.id)}><FaTrashAlt /></span>
+                    </div>
                 </div>
             )
         })

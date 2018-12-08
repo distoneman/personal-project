@@ -9,5 +9,7 @@ app.use(express.json());
 
 app.get('/api/players', ctrl.getAllPlayers)
 app.post('/api/players', ctrl.createOnePlayer)
+app.delete('/api/players', ctrl.deleteOnePlayer)
+app.put('/api/players', ctrl.updatePlayer)
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));

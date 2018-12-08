@@ -39,6 +39,35 @@ module.exports = {
         })
         id++
         res.status(200).send(players)
-    }
+    },
+
+    deleteOnePlayer: (req, res) => {
+        const deleteId = req.params.id;
+        const playerIndex = players.findIndex(
+            player => player.id == deleteId)
+        players.splice(playerIndex,1);
+        res.status(200).send(players)
+
+    },
+
+    updatePlayer: (req, res) => {
+        const{text} = req.body;
+        const updateID = req.params.id;
+        const playerIndex = players.findIndex(
+            player => player.id == updateID
+        );
+        let player = players[playerIndex]
+
+        players[playerIndex] = {
+            id: player.id,
+            firstName: player.firstName,
+            lastName: player.lastName,
+            team: player.team,
+            position: player.position
+            // text: text || message.text,
+        }
+        res.status(200).send(players)
+    },
+
 
 }    

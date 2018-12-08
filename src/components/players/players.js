@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import './players.css'
-
-import { FaTrashAlt } from "react-icons/fa";
-import { FaPencilAlt } from "react-icons/fa";
+import './players.css';
+import DisplayPlayersList from '../displayPlayers/displayPlayers.js';
 
 
 class Players extends Component {
@@ -17,7 +15,7 @@ class Players extends Component {
             position: ''
         }
         // this.state.players = this.state.players.bind(this)
-
+        this.deletePlayer = this.deletePlayer.bind(this)
     }
     componentDidMount() {
         axios.get('/api/players')
@@ -68,34 +66,33 @@ class Players extends Component {
     editPlayer(id) {
         console.log('Edit Player function')
         const playerIndex = this.state.players.findIndex(
-            player => player.id == id
+            player => player.id === id
         )
         let player = this.state.players[playerIndex]
         console.log(player)
 
-        
+
 
         // return(<div className='edit-container'>edit player</div>)
     }
 
     render() {
-
         // console.log(this.state.players);
         // console.log(this.state.players[0].firstName)
-        let displayPlayers = this.state.players.map(player => {
-            return (
-                // <p key={player.id}>{`${player.firstName} ${player.lastName}`}</p>
-                <div className='player-container' key={player.id}>
-                    <div className="playerData">{`${player.firstName} ${player.lastName}`}</div>
-                    <div className="playerData">{player.team}</div>
-                    <div className="playerData">{player.position}</div>
-                    <div className="playerData playerControls">
-                        <span className="player-control-icons" onClick={() => this.editPlayer(player.id)}><FaPencilAlt /></span>
-                        <span className="player-control-icons" onClick={() => this.deletePlayer(player.id)}><FaTrashAlt /></span>
-                    </div>
-                </div>
-            )
-        })
+        // let displayPlayers = this.state.players.map(player => {
+        //     return (
+        //         // <p key={player.id}>{`${player.firstName} ${player.lastName}`}</p>
+        //         <div className='player-container' key={player.id}>
+        //             <div className="playerData">{`${player.firstName} ${player.lastName}`}</div>
+        //             <div className="playerData">{player.team}</div>
+        //             <div className="playerData">{player.position}</div>
+        //             <div className="playerData playerControls">
+        //                 <span className="player-control-icons" onClick={() => this.editPlayer(player.id)}><FaPencilAlt /></span>
+        //                 <span className="player-control-icons" onClick={() => this.deletePlayer(player.id)}><FaTrashAlt /></span>
+        //             </div>
+        //         </div>
+        //     )
+        // })
 
         return (
             <div>
@@ -125,7 +122,8 @@ class Players extends Component {
                         <div className="playerHeader playerData playerControls"></div>
                     </div>
                 </div>
-                {displayPlayers}
+                {/* {displayPlayers} */}
+                <DisplayPlayersList list={this.state.players} deletePlayer={this.deletePlayer}test='test'/>
             </div>
         )
     }

@@ -1,0 +1,24 @@
+.list-container{
+    margin-top: 25px;
+}
+.player-container{
+    display: flex;
+    justify-content: center;
+
+}
+
+.playerHeader{
+    text-align: center;
+    background-color: lightgrey;
+}
+
+.playerData{
+    width: 200px;
+    border: solid 1px gray;
+    padding: 3px;
+}
+
+.playerControls{
+    width: 100px;
+}
+

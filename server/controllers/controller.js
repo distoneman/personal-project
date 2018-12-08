@@ -30,14 +30,13 @@ module.exports = {
 
     createOnePlayer: (req, res) => {
 
-        let newObj = {
+        players.push({
             id: id,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             team: req.body.team,
             position: req.body.position
-        }
-        players.push(newObj)
+        })
         id++
         res.status(200).send(players)
     }

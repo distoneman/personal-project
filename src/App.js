@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from '../src/components/header/header.js'
 import Players from '../src/components/players/players.js'
+import './components/displayPlayers/displayPlayers.js'
 
 class App extends Component {
   constructor(props) {

@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web');
+
+.header{
+    display: flex;
+    justify-content: center;
+    background-color: dodgerblue;
+    font-size: 36px;
+    color: white;
+}

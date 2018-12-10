@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import './header.css'
+import baseball from './../../images/baseball.png'
 
-class Header extends Component {
-    render() {
+function Header(){
         return (
             <div className='header'>
-                <h2>My Players App</h2>
+                <img className='image-baseball' src={baseball} alt="baseball graphic"/>
+                <h2>Team Players</h2>
             </div>
         )
-    }
 
 }
 

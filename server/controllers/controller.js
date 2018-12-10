@@ -11,7 +11,7 @@ let players = [
         id: 1,
         firstName: 'Bryce',
         lastName: 'Harper',
-        team: 'Nationals',
+        team: 'Rockies',
         position: 'Right Field'
     },
     {
@@ -22,6 +22,8 @@ let players = [
         position: 'Pitcher'
     }
 ]
+
+let teamNames = ["Dodgers", "Giants","Yankees", "Red Sox", "Rockies", "Nationals", "Angels"]
 
 module.exports = {
     getAllPlayers: (req, res) => {
@@ -42,7 +44,7 @@ module.exports = {
     },
 
     deleteOnePlayer: (req, res) => {
-        const deleteId = req.params.id;
+        const deleteId = req.query.id;
         console.log(deleteId)
         const playerIndex = players.findIndex(
             player => player.id == deleteId)
@@ -52,7 +54,8 @@ module.exports = {
     },
 
     updatePlayer: (req, res) => {
-        const updateId = req.body.id;
+        console.log(req.params)
+        const updateId = req.params.id;
         console.log(req.params.id)
         const playerIndex = players.findIndex(
             player => player.id == updateId
@@ -65,5 +68,17 @@ module.exports = {
         players[playerIndex].position = req.body.position
 
         res.status(200).send(players)
+    },
+
+    filterByTeam: (req, res) => {
+        const teamFilter = req.params.teamName;
+        console.log('team = ' + teamFilter)
+        let filteredPlayers = players.filter(player => player.team == teamFilter)
+        console.log('filtered array = ' + filteredPlayers)
+        res.status(200).send(filteredPlayers)
+    },
+
+    getTeamNames: (req, res) => {
+        res.status(200).send(teamNames)
     }
 }    

@@ -10,11 +10,12 @@ class Players extends Component {
         super(props)
         this.state = {
             players: [],
+            teamNames: [],
             firstName: '',
             lastName: '',
             team: '',
             position: '',
-            teamNames: ["Dodgers", "Giants","Yankees", "Red Sox", "Rockies"]
+            id: null
         }
         // this.state.players = this.state.players.bind(this)
         this.deletePlayer = this.deletePlayer.bind(this)
@@ -26,6 +27,12 @@ class Players extends Component {
                 // console.log(res)
                 this.setState({
                     players: res.data
+                })
+        })
+        axios.get('/api/teams')
+            .then(res => {
+                this.setState({
+                    teamNames: res.data
                 })
             })
         document.getElementById('btnUpdate').style.visibility = 'hidden';
@@ -60,7 +67,7 @@ class Players extends Component {
     deletePlayer(id) {
         console.log('Delete Player function')
         console.log(id)
-        axios.delete(`/api/players/?${id}`)
+        axios.delete(`/api/players/?id=${id}`)
             .then(res => {
                 this.setState({
                     players: res.data
@@ -87,30 +94,42 @@ class Players extends Component {
         console.log(id)
     }
 
-    updatePlayer() {
+    updatePlayer(id) {
         console.log(`update player ${this.state.id}`)
         let updatePlayer = {
-            id: this.state.id,
+
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             team: this.state.team,
             position: this.state.position
         }
         console.log(updatePlayer)
-        axios.put(`/api/players/`, updatePlayer)
+        axios.put(`/api/players/${id}`, updatePlayer)
             .then(res => {
                 this.setState({
                     players: res.data
                 })
             })
+    }
 
+    filterByTeam(val){
+        console.log(val)
+        
+        axios.get(`/api/teamsFilter/${val}`)
+            .then(res => {
+                // console.log(res)
+                this.setState({
+                    players: res.data
+                })
+        })
+        console.log("players on state = " + this.state.players)
     }
 
     render() {
-        let teamList = 
-            this.state.teamNames.map(team => {
-                return(
-                    <option value={team}>{team}</option>
+        let teamList =
+            this.state.teamNames.sort().map(team => {
+                return (
+                    <option key={team} value={team}>{team}</option>
                 )
             })
 
@@ -132,7 +151,7 @@ class Players extends Component {
                                 ></input>
                             </div>
                             <div className='input-elements'>
-                                <select className='player-input' name="team" 
+                                <select className='player-input' name="team"
                                     id="team" value={this.state.team}
                                     onChange={(e) => this.handleChange('team', e.target.value)}>
                                     <option value="">Select Team</option>
@@ -150,11 +169,11 @@ class Players extends Component {
                                 ></input>
                             </div>
                             <div className='input-elements'>
-                                <button id="btnAdd" 
+                                <button id="btnAdd"
                                     onClick={() => this.addNewPlayer()}>Add New Player
-                                </button> 
+                                </button>
                                 <button id="btnUpdate"
-                                    onClick={() => this.updatePlayer()}>Update Player
+                                    onClick={() => this.updatePlayer(this.state.id)}>Update Player
                                 </button>
                             </div>
                         </div>
@@ -164,7 +183,21 @@ class Players extends Component {
                 </div>
                 <DisplayPlayersList list={this.state.players}
                     deletePlayer={this.deletePlayer}
-                    editPlayer={this.editPlayer} />
+                    editPlayer={this.editPlayer}
+                // updatePlayer={this.updatePlayer} 
+                />
+
+                <form>
+                    <select name="teams" id="teams"
+                        onChange={(e)=>this.filterByTeam(e.target.value)}>
+                        <option value=''>Select Team</option>
+                        <option value="Angels">Angels</option>
+                        <option value="Dodgers">Dodgers</option>
+                        <option value="Giants">Giants</option>
+                        <option value="Rockies">Rockies</option>
+                        <option value="Yankees">Dodgers</option>
+                    </select>
+                </form>
             </div>
         )
     }

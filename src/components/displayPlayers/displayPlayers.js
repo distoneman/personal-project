@@ -12,10 +12,10 @@ class DisplayPlayersList extends Component {
         this.state = {
             players: props.list,
             test: props.test
-
         }
     }
     render() {
+
         let displayPlayers = this.props.list.map(player => {
             return (
                 // <p key={player.id}>{`${player.firstName} ${player.lastName}`}</p>
@@ -24,8 +24,12 @@ class DisplayPlayersList extends Component {
                     <div className="playerData">{player.team}</div>
                     <div className="playerData">{player.position}</div>
                     <div className="playerData playerControls">
-                        <span className="player-control-icons" onClick={() => this.editPlayer(player.id)}><FaPencilAlt /></span>
-                        <span className="player-control-icons" onClick={() => this.props.deletePlayer(player.id)}><FaTrashAlt /></span>
+                        <span className="player-control-icons"
+                            onClick={() => this.props.editPlayer(player.id)}><FaPencilAlt />
+                        </span>
+                        <span className="player-control-icons"
+                            onClick={() => this.props.deletePlayer(player.id)}><FaTrashAlt />
+                        </span>
                     </div>
                 </div>
             )
@@ -33,8 +37,15 @@ class DisplayPlayersList extends Component {
 
         return (
             <div>
-            {displayPlayers}
-
+                <div className="list-container">
+                    <div className="player-container">
+                        <div className="playerHeader playerData">Player Name</div>
+                        <div className="playerHeader playerData">Current Team</div>
+                        <div className="playerHeader playerData">Position</div>
+                        <div className="playerHeader playerData playerControls"></div>
+                    </div>
+                </div>
+                {displayPlayers}
             </div>
         )
     }

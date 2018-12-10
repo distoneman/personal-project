@@ -22,14 +22,31 @@
     width: 100px;
 }
 
-.player-control-icons{
+.player-control-icons {
     padding-left: 15px;
     font-size: 15px;
     cursor: pointer;
 }
 
-.edit-container{
-    
+.input-container {
+    display: flex;
+    justify-content: center;
+}
+
+.player-input {
+    font-size: 16px;
+}
+
+.input-elements {
+    padding: 5px;
+}
+
+#btnAdd {
+    font-size: 14px;
+}
+
+#btnUpdate {
+    font-size: 14px;
 }
 
 

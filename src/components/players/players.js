@@ -10,13 +10,11 @@ class Players extends Component {
         super(props)
         this.state = {
             players: [],
-            // id: null,
             firstName: '',
             lastName: '',
             team: '',
             position: '',
-            buttonText: 'Add New Player!',
-            buttonAction: ''
+            teamNames: ["Dodgers", "Giants","Yankees", "Red Sox", "Rockies"]
         }
         // this.state.players = this.state.players.bind(this)
         this.deletePlayer = this.deletePlayer.bind(this)
@@ -30,6 +28,8 @@ class Players extends Component {
                     players: res.data
                 })
             })
+        document.getElementById('btnUpdate').style.visibility = 'hidden';
+
     }
 
     handleChange(prop, val) {
@@ -71,13 +71,14 @@ class Players extends Component {
     editPlayer(id) {
         console.log('Edit Player function')
         document.getElementById('btnAdd').style.visibility = 'hidden';
+        document.getElementById('btnUpdate').style.visibility = 'visible';
         const playerIndex = this.state.players.findIndex(
             player => player.id === id
         )
         // let player = this.state.players[playerIndex]
         this.setState({
             buttonText: 'Update Player',
-            id:id,
+            id: id,
             lastName: this.state.players[playerIndex].lastName,
             firstName: this.state.players[playerIndex].firstName,
             team: this.state.players[playerIndex].team,
@@ -96,8 +97,8 @@ class Players extends Component {
             position: this.state.position
         }
         console.log(updatePlayer)
-        axios.put(`/api/players/`, updatePlayer )
-            .then(res =>{
+        axios.put(`/api/players/`, updatePlayer)
+            .then(res => {
                 this.setState({
                     players: res.data
                 })
@@ -106,66 +107,61 @@ class Players extends Component {
     }
 
     render() {
-        // console.log(this.state.players);
-        // console.log(this.state.players[0].firstName)
-        // let displayPlayers = this.state.players.map(player => {
-        //     return (
-        //         // <p key={player.id}>{`${player.firstName} ${player.lastName}`}</p>
-        //         <div className='player-container' key={player.id}>
-        //             <div className="playerData">{`${player.firstName} ${player.lastName}`}</div>
-        //             <div className="playerData">{player.team}</div>
-        //             <div className="playerData">{player.position}</div>
-        //             <div className="playerData playerControls">
-        //                 <span className="player-control-icons" onClick={() => this.editPlayer(player.id)}><FaPencilAlt /></span>
-        //                 <span className="player-control-icons" onClick={() => this.deletePlayer(player.id)}><FaTrashAlt /></span>
-        //             </div>
-        //         </div>
-        //     )
-        // })
+        let teamList = 
+            this.state.teamNames.map(team => {
+                return(
+                    <option value={team}>{team}</option>
+                )
+            })
 
         return (
             <div>
-                <div className='input-container'>
+                <div>
                     <form id="playerForm">
-                        <input placeholder="First Name" value={this.state.firstName}
-                            onChange={(e) => this.handleChange('firstName', e.target.value)}
-                        ></input>
-                        <input placeholder="Last Name" value={this.state.lastName}
-                            onChange={(e) => this.handleChange('lastName', e.target.value)}
-                        ></input>
-                        {/* <input placeholder="Team"
-                            onChange={(e) => this.handleChange('team', e.target.value)}
-                        ></input> */}
-                        <select name="team" id="team" value={this.state.team}
-                            onChange={(e) => this.handleChange('team', e.target.value)}>
-                            <option value="">Select Team</option>
-                            <option value="Dodgers">Dodgers</option>
-                            <option value="Yankees">Yankees</option>
-                            <option value="Boston">Boston</option>
-                            <option value="Angels">Angels</option>
-                        </select>
-                        <input placeholder="Position" value={this.state.position}
-                            onChange={(e) => this.handleChange('position', e.target.value)}
-                        ></input>
-                        <button id="btnAdd"
-                            onClick={() => this.addNewPlayer()}>{this.state.buttonText}
-                        </button>
-                        <button
-                            onClick={() => this.updatePlayer()}>Update
-                        </button>
+                        <div className='input-container'>
+                            <div className='input-elements'>
+                                <input className='player-input'
+                                    placeholder="First Name" value={this.state.firstName}
+                                    onChange={(e) => this.handleChange('firstName', e.target.value)}
+                                ></input>
+                            </div>
+                            <div className='input-elements'>
+                                <input className='player-input'
+                                    placeholder="Last Name" value={this.state.lastName}
+                                    onChange={(e) => this.handleChange('lastName', e.target.value)}
+                                ></input>
+                            </div>
+                            <div className='input-elements'>
+                                <select className='player-input' name="team" 
+                                    id="team" value={this.state.team}
+                                    onChange={(e) => this.handleChange('team', e.target.value)}>
+                                    <option value="">Select Team</option>
+                                    {/* <option value="Dodgers">Dodgers</option>
+                                    <option value="Yankees">Yankees</option>
+                                    <option value="Boston">Boston</option>
+                                    <option value="Angels">Angels</option> */}
+                                    {teamList}
+                                </select>
+                            </div>
+                            <div className='input-elements'>
+                                <input className='player-input'
+                                    placeholder="Position" value={this.state.position}
+                                    onChange={(e) => this.handleChange('position', e.target.value)}
+                                ></input>
+                            </div>
+                            <div className='input-elements'>
+                                <button id="btnAdd" 
+                                    onClick={() => this.addNewPlayer()}>Add New Player
+                                </button> 
+                                <button id="btnUpdate"
+                                    onClick={() => this.updatePlayer()}>Update Player
+                                </button>
+                            </div>
+                        </div>
                         {/* <Button buttonAction={this.state.buttonAction}>{this.state.buttonText}</Button> */}
 
                     </form>
                 </div>
-                {/* <div className="list-container">
-                    <div className="player-container">
-                        <div className="playerHeader playerData">Player Name</div>
-                        <div className="playerHeader playerData">Current Team</div>
-                        <div className="playerHeader playerData">Position</div>
-                        <div className="playerHeader playerData playerControls"></div>
-                    </div>
-                </div> */}
-                {/* {displayPlayers} */}
                 <DisplayPlayersList list={this.state.players}
                     deletePlayer={this.deletePlayer}
                     editPlayer={this.editPlayer} />

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import './displayPlayers.css'
 import '../players/players.css'
+import DataHeader from '../dataHeader/dataHeader.js'
 
 
 import { FaTrashAlt } from "react-icons/fa";
@@ -10,8 +11,7 @@ class DisplayPlayersList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            players: props.list,
-            test: props.test
+            players: props.list
         }
     }
     render() {
@@ -37,14 +37,15 @@ class DisplayPlayersList extends Component {
 
         return (
             <div>
-                <div className="list-container">
+                {/* <div className="list-container">
                     <div className="player-container">
                         <div className="playerHeader playerData">Player Name</div>
                         <div className="playerHeader playerData">Current Team</div>
                         <div className="playerHeader playerData">Position</div>
                         <div className="playerHeader playerData playerControls"></div>
                     </div>
-                </div>
+                </div> */}
+                <DataHeader/>
                 {displayPlayers}
             </div>
         )
